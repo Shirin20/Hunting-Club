@@ -5,7 +5,7 @@ This documentation describes the RESTful API for the Hunting Club. The API allow
 ## Base URL
 
 All API requests should be made to the following base URL:
-
+The api is not deployed yest
 ## Authentication
 
 To perform safe HTTP calls, a valid JWT token is required. To obtain a JWT token, you should first register a new user or sign in with an existing user:
