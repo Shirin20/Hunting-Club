@@ -1,0 +1,35 @@
+{
+  "name": "Hunting Club",
+  "version": "1.0.0",
+  "description": "This webb service is implementing a web API thats following the theory of REST",
+  "type": "module",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon --inspect -r dotenv/config src/server.js",
+    "lint": "npx eslint ./src || exit 0",
+    "lint:fix": "npx eslint ./src --fix || exit 0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Shirin20/huntingClub"
+  },
+  "author": "Shirin Meirkhan",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "express": "^4.18.2",
+    "helmet": "^6.0.1",
+    "http-errors": "^2.0.0",
+    "jsonwebtoken": "^9.0.0",
+    "mongoose": "^7.0.2",
+    "mongoose-lean-virtuals": "^0.9.1",
+    "morgan": "^1.10.0",
+    "node-fetch": "^3.3.1"
+  },
+  "devDependencies": {
+    "@lnu/eslint-config": "^1.1.7",
+    "dotenv": "^16.0.3",
+    "nodemon": "^2.0.21"
+  }
+}

@@ -1,0 +1,1654 @@
+{
+	"info": {
+		"_postman_id": "6d5014ba-0c62-4d06-8657-590fff8efc4a",
+		"name": "Hunting api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19995663"
+	},
+	"item": [
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "200 GET /users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://cscloud7-113.lnu.se/api/users/",
+							"protocol": "https",
+							"host": [
+								"cscloud7-113",
+								"lnu",
+								"se"
+							],
+							"path": [
+								"api",
+								"users",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "registerUser",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response contains a user ID\", function () {\r",
+									"    const jsonResponse = pm.response.json();\r",
+									"    pm.expect(jsonResponse).to.have.property(\"id\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"testuser\",\r\n  \"password\": \"testpassword\",\r\n  \"email\": \"test@example.com\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://cscloud7-113.lnu.se/api/users/register",
+							"protocol": "https",
+							"host": [
+								"cscloud7-113",
+								"lnu",
+								"se"
+							],
+							"path": [
+								"api",
+								"users",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "409 registerUser",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 409\", function () {\r",
+									"    pm.response.to.have.status(409);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has error message\", function () {\r",
+									"    const jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.message).to.be.a('string');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"testuser\",\r\n  \"password\": \"testpassword\",\r\n  \"email\": \"test@example.com\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://cscloud7-113.lnu.se/api/users/register",
+							"protocol": "https",
+							"host": [
+								"cscloud7-113",
+								"lnu",
+								"se"
+							],
+							"path": [
+								"api",
+								"users",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "201 login User-1",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.environment.get(\"variable_key\");"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response contains an access token\", function () {\r",
+									"    const jsonResponse = pm.response.json();\r",
+									"    pm.expect(jsonResponse).to.have.property(\"access_token\");\r",
+									"\r",
+									"    // Save the access token as a global variable\r",
+									"    pm.globals.set(\"accessToken-user-1\", jsonResponse.access_token);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"User-1\",\r\n  \"password\": \"User-1-user\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://cscloud7-113.lnu.se/api/users/login",
+							"protocol": "https",
+							"host": [
+								"cscloud7-113",
+								"lnu",
+								"se"
+							],
+							"path": [
+								"api",
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "201 login User-2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response contains an access token\", function () {\r",
+									"    const jsonResponse = pm.response.json();\r",
+									"    pm.expect(jsonResponse).to.have.property(\"access_token\");\r",
+									"\r",
+									"    // Save the access token as a global variable\r",
+									"    pm.globals.set(\"accessToken-user-2\", jsonResponse.access_token);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"User-2\",\r\n  \"password\": \"User-2-user\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://cscloud7-113.lnu.se/api/users/login",
+							"protocol": "https",
+							"host": [
+								"cscloud7-113",
+								"lnu",
+								"se"
+							],
+							"path": [
+								"api",
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "401 login User-2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 401\", function () {\r",
+									"    pm.response.to.have.status(401);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has error message\", function () {\r",
+									"    const jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.message).to.be.a('string');\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"User-2\",\r\n  \"password\": \"User-3-user\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://cscloud7-113.lnu.se/api/users/login",
+							"protocol": "https",
+							"host": [
+								"cscloud7-113",
+								"lnu",
+								"se"
+							],
+							"path": [
+								"api",
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Games",
+			"item": [
+				{
+					"name": "404 GET /gamess page not found",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has error message\", function () {\r",
+									"    const jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.message).to.be.a('string');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://cscloud7-113.lnu.se/api/gamess",
+							"protocol": "https",
+							"host": [
+								"cscloud7-113",
+								"lnu",
+								"se"
+							],
+							"path": [
+								"api",
+								"gamess"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "200 GET /games",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://cscloud7-113.lnu.se/api/games",
+							"protocol": "https",
+							"host": [
+								"cscloud7-113",
+								"lnu",
+								"se"
+							],
+							"path": [
+								"api",
+								"games"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "201 CREATE /game/:id user-1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Check if the response status is 201 (Created)\r",
+									"if (pm.response.code === 201) {\r",
+									"    // Parse the response body\r",
+									"    const responseBody = pm.response.json();\r",
+									"    \r",
+									"    // Extract the game ID from the response data\r",
+									"    const gameId = responseBody.data.id;\r",
+									"\r",
+									"    // Save the game ID in an global or global variable\r",
+									"    pm.globals.set(\"gameId\", gameId); \r",
+									"}\r",
+									"\r",
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"const jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response has expected fields\", function () {\r",
+									"    pm.expect(jsonData).to.have.property('data');\r",
+									"    pm.expect(jsonData.data).to.have.property('id');\r",
+									"    pm.expect(jsonData.data).to.have.property('hunter');\r",
+									"    pm.expect(jsonData.data).to.have.property('specie');\r",
+									"    pm.expect(jsonData.data).to.have.property('position');\r",
+									"    pm.expect(jsonData.data.position).to.have.property('latitude');\r",
+									"    pm.expect(jsonData.data.position).to.have.property('longitude');\r",
+									"    pm.expect(jsonData.data).to.have.property('city');\r",
+									"    pm.expect(jsonData.data).to.have.property('weight');\r",
+									"    pm.expect(jsonData.data).to.have.property('length');\r",
+									"    pm.expect(jsonData.data).to.have.property('imageUrl');\r",
+									"    pm.expect(jsonData).to.have.property('links');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response data has correct values\", function () {\r",
+									"    const requestBody = JSON.parse(pm.request.body.raw);\r",
+									"\r",
+									"    pm.expect(jsonData.data.specie).to.eql(requestBody.specie);\r",
+									"    pm.expect(jsonData.data.position.latitude).to.eql(requestBody.position.latitude);\r",
+									"    pm.expect(jsonData.data.position.longitude).to.eql(requestBody.position.longitude);\r",
+									"    pm.expect(jsonData.data.city).to.eql(requestBody.city);\r",
+									"    pm.expect(jsonData.data.weight).to.eql(requestBody.weight);\r",
+									"    pm.expect(jsonData.data.length).to.eql(requestBody.length);\r",
+									"    pm.expect(jsonData.data.imageUrl).to.eql(requestBody.imageUrl);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken-user-1}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"specie\": \"new game\",\r\n  \"area\": \"Kalmar\",\r\n  \"city\": \"Kalmar\",\r\n  \"position\": {\r\n    \"latitude\": 56.66345,\r\n    \"longitude\": 16.35678\r\n  },\r\n  \"weight\": 120,\r\n  \"length\": 180,\r\n  \"imageUrl\": \"https://example.com/image.jpg\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://cscloud7-113.lnu.se/api/games/",
+							"protocol": "https",
+							"host": [
+								"cscloud7-113",
+								"lnu",
+								"se"
+							],
+							"path": [
+								"api",
+								"games",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "401 CREATE /game/:id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 401\", function () {\r",
+									"    pm.response.to.have.status(401);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has error message\", function () {\r",
+									"    const jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.message).to.be.a('string');\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"specie\": \"new game\",\r\n  \"area\": \"Kalmar\",\r\n  \"city\": \"Kalmar\",\r\n  \"position\": {\r\n    \"latitude\": 56.66345,\r\n    \"longitude\": 16.35678\r\n  },\r\n  \"weight\": 120,\r\n  \"length\": 180,\r\n  \"imageUrl\": \"https://example.com/image.jpg\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://cscloud7-113.lnu.se/api/games/",
+							"protocol": "https",
+							"host": [
+								"cscloud7-113",
+								"lnu",
+								"se"
+							],
+							"path": [
+								"api",
+								"games",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "200 GET /game/:id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://cscloud7-113.lnu.se/api/games/{{gameId}}",
+							"protocol": "https",
+							"host": [
+								"cscloud7-113",
+								"lnu",
+								"se"
+							],
+							"path": [
+								"api",
+								"games",
+								"{{gameId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE /game/:id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has expected fields\", function () {\r",
+									"    const jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.have.property('message');\r",
+									"    pm.expect(jsonData.message).to.equal('Game updated successfully');\r",
+									"    pm.expect(jsonData).to.have.property('links');\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken-user-1}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"specie\": \"Brown bear\",\r\n        \"position\": {\r\n            \"latitude\": 67.32377021550255,\r\n            \"longitude\": 19.891022194181453\r\n        },\r\n        \"city\": \"Jämtlands län\",\r\n        \"weight\": 351.46595281432366,\r\n        \"length\": 1.4571095150261422,\r\n        \"imageUrl\": \"https://example.com/Pheasant.jpg\",\r\n        \"createdAt\": \"2023-03-30T09:55:20.890Z\",\r\n        \"updatedAt\": \"2023-03-30T09:55:20.890Z\",\r\n        \"id\": \"64255c88771b6db51807902f\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://cscloud7-113.lnu.se/api/games/{{gameId}}",
+							"protocol": "https",
+							"host": [
+								"cscloud7-113",
+								"lnu",
+								"se"
+							],
+							"path": [
+								"api",
+								"games",
+								"{{gameId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "403 UPDATE /game/:id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 403\", function () {\r",
+									"    pm.response.to.have.status(403);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has error message\", function () {\r",
+									"    const jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.message).to.be.a('string');\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken-user-2}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"specie\": \"Brown bear2\",\r\n        \"position\": {\r\n            \"latitude\": 67.32377021550255,\r\n            \"longitude\": 19.891022194181453\r\n        },\r\n        \"city\": \"Jämtlands län\",\r\n        \"weight\": 351.46595281432366,\r\n        \"length\": 1.4571095150261422,\r\n        \"imageUrl\": \"https://example.com/Pheasant.jpg\",\r\n        \"createdAt\": \"2023-03-30T09:55:20.890Z\",\r\n        \"updatedAt\": \"2023-03-30T09:55:20.890Z\",\r\n        \"id\": \"64255c88771b6db51807902f\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://cscloud7-113.lnu.se/api/games/{{gameId}}",
+							"protocol": "https",
+							"host": [
+								"cscloud7-113",
+								"lnu",
+								"se"
+							],
+							"path": [
+								"api",
+								"games",
+								"{{gameId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "400 UPDATE /game/:id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has error message\", function () {\r",
+									"    const jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.message).to.be.a('string');\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken-user-1}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"position\": {\r\n            \"latitude\": 67.32377021550255,\r\n            \"longitude\": 19.891022194181453\r\n        },\r\n        \"city\": \"Jämtlands län\",\r\n        \"weight\": 351.46595281432366,\r\n        \"length\": 1.4571095150261422,\r\n        \"imageUrl\": \"https://example.com/Pheasant.jpg\",\r\n        \"createdAt\": \"2023-03-30T09:55:20.890Z\",\r\n        \"updatedAt\": \"2023-03-30T09:55:20.890Z\",\r\n        \"id\": \"64255c88771b6db51807902f\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://cscloud7-113.lnu.se/api/games/{{gameId}}",
+							"protocol": "https",
+							"host": [
+								"cscloud7-113",
+								"lnu",
+								"se"
+							],
+							"path": [
+								"api",
+								"games",
+								"{{gameId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "403 DELETE /game/:id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 403\", function () {\r",
+									"    pm.response.to.have.status(403);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has error message\", function () {\r",
+									"    const jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.message).to.be.a('string');\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken-user-2}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"specie\": \"Brown bear2\",\r\n        \"position\": {\r\n            \"latitude\": 67.32377021550255,\r\n            \"longitude\": 19.891022194181453\r\n        },\r\n        \"city\": \"Jämtlands län\",\r\n        \"weight\": 351.46595281432366,\r\n        \"length\": 1.4571095150261422,\r\n        \"imageUrl\": \"https://example.com/Pheasant.jpg\",\r\n        \"createdAt\": \"2023-03-30T09:55:20.890Z\",\r\n        \"updatedAt\": \"2023-03-30T09:55:20.890Z\",\r\n        \"id\": \"64255c88771b6db51807902f\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://cscloud7-113.lnu.se/api/games/{{gameId}}",
+							"protocol": "https",
+							"host": [
+								"cscloud7-113",
+								"lnu",
+								"se"
+							],
+							"path": [
+								"api",
+								"games",
+								"{{gameId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "204 DELETE /game/:id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken-user-1}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://cscloud7-113.lnu.se/api/games/{{gameId}}",
+							"protocol": "https",
+							"host": [
+								"cscloud7-113",
+								"lnu",
+								"se"
+							],
+							"path": [
+								"api",
+								"games",
+								"{{gameId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "404 DELETE /game/:id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has error message\", function () {\r",
+									"    const jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.message).to.be.a('string');\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken-user-1}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://cscloud7-113.lnu.se/api/games/{{gameId}}",
+							"protocol": "https",
+							"host": [
+								"cscloud7-113",
+								"lnu",
+								"se"
+							],
+							"path": [
+								"api",
+								"games",
+								"{{gameId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "404 GET  /game/:id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has error message\", function () {\r",
+									"    const jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.message).to.be.a('string');\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://cscloud7-113.lnu.se/api/games/{{gameId}}",
+							"protocol": "https",
+							"host": [
+								"cscloud7-113",
+								"lnu",
+								"se"
+							],
+							"path": [
+								"api",
+								"games",
+								"{{gameId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "404 UPDATE /game/:id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has error message\", function () {\r",
+									"    const jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.message).to.be.a('string');\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "https://cscloud7-113.lnu.se/api/games/{{gameId}}",
+							"protocol": "https",
+							"host": [
+								"cscloud7-113",
+								"lnu",
+								"se"
+							],
+							"path": [
+								"api",
+								"games",
+								"{{gameId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Webhook",
+			"item": [
+				{
+					"name": "webhook",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has expected fields\", function () {\r",
+									"    const jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.have.property('webhooks');\r",
+									"    pm.expect(jsonData).to.have.property('availableEvents');\r",
+									"    pm.expect(jsonData).to.have.property('registerLink');\r",
+									"    pm.expect(jsonData).to.have.property('links');\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://cscloud7-113.lnu.se/api/webhooks/",
+							"protocol": "https",
+							"host": [
+								"cscloud7-113",
+								"lnu",
+								"se"
+							],
+							"path": [
+								"api",
+								"webhooks",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "201 Register new  webhook",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has expected fields\", function () {\r",
+									"    const jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.have.property('data');\r",
+									"    pm.expect(jsonData.data).to.have.property('id');\r",
+									"    pm.expect(jsonData.data).to.have.property('subscriberUrl');\r",
+									"    pm.expect(jsonData.data).to.have.property('subscriberId');\r",
+									"    pm.expect(jsonData.data).to.have.property('event');\r",
+									"    pm.expect(jsonData).to.have.property('links');\r",
+									"});\r",
+									"\r",
+									"// Set the global variable\r",
+									"pm.globals.set(\"webhookId\", pm.response.json().data.id);\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken-user-1}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"subscriberUrl\": \"https://webhook.site/7bfd5a5a-c477-443e-9b87-8b883c6e1062\",\r\n\"event\": \"create\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://cscloud7-113.lnu.se/api/webhooks/register/",
+							"protocol": "https",
+							"host": [
+								"cscloud7-113",
+								"lnu",
+								"se"
+							],
+							"path": [
+								"api",
+								"webhooks",
+								"register",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "401 Register new  webhook",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 401\", function () {\r",
+									"    pm.response.to.have.status(401);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has error message\", function () {\r",
+									"    const jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.message).to.be.a('string');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"subscriberUrl\": \"https://webhook.site/7bfd5a5a-c477-443e-9b87-8b883c6e1062\",\r\n\"event\": \"create\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://cscloud7-113.lnu.se/api/webhooks/register/",
+							"protocol": "https",
+							"host": [
+								"cscloud7-113",
+								"lnu",
+								"se"
+							],
+							"path": [
+								"api",
+								"webhooks",
+								"register",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE webhooks/:id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has expected fields\", function () {\r",
+									"    const jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.have.property('message');\r",
+									"    pm.expect(jsonData.message).to.equal('webhook is updated successfully');\r",
+									"    pm.expect(jsonData).to.have.property('links');\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken-user-1}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"subscriberUrl\": \"www.newone@newUpdate.home\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://cscloud7-113.lnu.se/api/webhooks/{{webhookId}}",
+							"protocol": "https",
+							"host": [
+								"cscloud7-113",
+								"lnu",
+								"se"
+							],
+							"path": [
+								"api",
+								"webhooks",
+								"{{webhookId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "401 UPDATE webhooks/:id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 401\", function () {\r",
+									"    pm.response.to.have.status(401);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has error message\", function () {\r",
+									"    const jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.message).to.be.a('string');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"subscriberUrl\": \"https://webhook.site/7bfd5a5a-c477-443e-9b87-8b883c6e1062\",\r\n\"event\": \"create\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://cscloud7-113.lnu.se/api/webhooks/{{webhookId}}",
+							"protocol": "https",
+							"host": [
+								"cscloud7-113",
+								"lnu",
+								"se"
+							],
+							"path": [
+								"api",
+								"webhooks",
+								"{{webhookId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "403 UPDATE webhooks/:id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 403\", function () {\r",
+									"    pm.response.to.have.status(403);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has error message\", function () {\r",
+									"    const jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.message).to.be.a('string');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken-user-2}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"subscriberUrl\": \"www.newone@newUpdate.home\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://cscloud7-113.lnu.se/api/webhooks/{{webhookId}}",
+							"protocol": "https",
+							"host": [
+								"cscloud7-113",
+								"lnu",
+								"se"
+							],
+							"path": [
+								"api",
+								"webhooks",
+								"{{webhookId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "401 DELETE webhooks/:id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 401\", function () {\r",
+									"    pm.response.to.have.status(401);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has error message\", function () {\r",
+									"    const jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.message).to.be.a('string');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"subscriberUrl\": \"https://webhook.site/7bfd5a5a-c477-443e-9b87-8b883c6e1062\",\r\n\"event\": \"create\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://cscloud7-113.lnu.se/api/webhooks/{{webhookId}}",
+							"protocol": "https",
+							"host": [
+								"cscloud7-113",
+								"lnu",
+								"se"
+							],
+							"path": [
+								"api",
+								"webhooks",
+								"{{webhookId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "403 DELETEwebhooks/:id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 403\", function () {\r",
+									"    pm.response.to.have.status(403);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has error message\", function () {\r",
+									"    const jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.message).to.be.a('string');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken-user-2}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"subscriberUrl\": \"www.newone@newUpdate.home\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://cscloud7-113.lnu.se/api/webhooks/{{webhookId}}",
+							"protocol": "https",
+							"host": [
+								"cscloud7-113",
+								"lnu",
+								"se"
+							],
+							"path": [
+								"api",
+								"webhooks",
+								"{{webhookId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "204 DELETE a webhook",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken-user-1}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://cscloud7-113.lnu.se/api/webhooks/{{webhookId}}",
+							"protocol": "https",
+							"host": [
+								"cscloud7-113",
+								"lnu",
+								"se"
+							],
+							"path": [
+								"api",
+								"webhooks",
+								"{{webhookId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "404 DELETE a webhook",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has error message\", function () {\r",
+									"    const jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.message).to.be.a('string');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken-user-1}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://cscloud7-113.lnu.se/api/webhooks/{{webhookId}}",
+							"protocol": "https",
+							"host": [
+								"cscloud7-113",
+								"lnu",
+								"se"
+							],
+							"path": [
+								"api",
+								"webhooks",
+								"{{webhookId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "404 UPDATE a webhook",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has error message\", function () {\r",
+									"    const jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.message).to.be.a('string');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken-user-1}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://cscloud7-113.lnu.se/api/webhooks/{{webhookId}}",
+							"protocol": "https",
+							"host": [
+								"cscloud7-113",
+								"lnu",
+								"se"
+							],
+							"path": [
+								"api",
+								"webhooks",
+								"{{webhookId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Api root",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://cscloud7-113.lnu.se/api",
+					"protocol": "https",
+					"host": [
+						"cscloud7-113",
+						"lnu",
+						"se"
+					],
+					"path": [
+						"api"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
